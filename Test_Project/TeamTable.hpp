@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include <map>
-#include "ReadFile.hpp"
 using namespace std;
 
 class GroupTable {
@@ -19,9 +19,9 @@ public:
 			cout << it->first << " => " << it->second << '\n';
 	}
 	// 根據隊友命令設定 一隊伍裡面有誰
-	void createTable(OneLine& line) {
+	void createTable(const vector<string>& line) {
 		for (size_t i = 1; i < line.size(); i++) {
-			int num = line.getIntIdx(i);
+			int num = std::stoi(line[i]);
 			data[num] = groupCont;
 		}
 		groupCont++;

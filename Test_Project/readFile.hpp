@@ -19,6 +19,12 @@ public:
 	operator _type() const {
 		return data;
 	}
+	operator vector<string>() const {
+		vector<string> str(data.size());
+		for (size_t i = 0; i < data.size(); i++)
+			str[i] = data[i];
+		return str;
+	}
 	string getStringIdx(size_t idx) const {
 		string s = "";
 		if (idx < data.size()) {
