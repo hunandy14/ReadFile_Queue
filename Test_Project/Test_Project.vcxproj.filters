@@ -34,5 +34,8 @@
     <ClInclude Include="ReadFile.hpp">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

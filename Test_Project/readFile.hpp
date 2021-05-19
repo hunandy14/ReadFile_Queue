@@ -17,6 +17,15 @@ public:
 	operator vector<string_view>() const {
 		return data;
 	}
+	string getStringIdx(size_t idx) const {
+		return string(data[idx]);
+	}
+	long getIntIdx(size_t idx) const {
+		return stoull(string(data[idx]));
+	}
+	size_t size() {
+		return data.size();
+	}
 
 	vector<string_view> splitSV(string_view strv, string_view delims = " ") {
 		vector<string_view> output;
