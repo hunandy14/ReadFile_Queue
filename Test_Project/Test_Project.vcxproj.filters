@@ -20,15 +20,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="in.txt">
-      <Filter>來源檔案</Filter>
-    </Text>
     <Text Include="ex.txt">
-      <Filter>來源檔案</Filter>
+      <Filter>資源檔</Filter>
+    </Text>
+    <Text Include="in.txt">
+      <Filter>資源檔</Filter>
+    </Text>
+    <Text Include="a.txt">
+      <Filter>資源檔</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="readFile.hpp">
+    <ClInclude Include="ReadFile.hpp">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
