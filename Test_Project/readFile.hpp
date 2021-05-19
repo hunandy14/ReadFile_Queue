@@ -14,27 +14,22 @@ public:
 	OndLine(const string_view strv, string_view delims = " ") {
 		splitSV(strv, delims);
 	}
-
-
 	operator vector<string_view>() const {
 		return data;
 	}
 
-
 	vector<string_view> splitSV(string_view strv, string_view delims = " ") {
 		vector<string_view> output;
-		size_t first = 0;
-		while (first < strv.size()) {
+		for (size_t first = 0; first < strv.size();) {
 			const auto second = strv.find_first_of(delims, first);
-			if (first != second) {
+			if (first != second)
 				output.emplace_back(strv.substr(first, second - first));
-			} if (second == string_view::npos) {
+			if (second == string_view::npos)
 				break;
-			} first = second + 1;
+			first = second + 1;
 		}
-		if (output.size() == 0) {
+		if (output.size() == 0)
 			output.emplace_back("");
-		}
 		data = std::move(output);
 		return data;
 	}
@@ -106,7 +101,7 @@ vector<string> ReadFile_line(const string file_name) {
 	return v;
 }
 
-// ¤Á³ÎÀÉ®× («æ¥[¸ü)
+// ¤Á³ÎÀÉ®×
 void rf_test1() {
 	auto&& v1 = ReadFile_line("in.txt");
 	vector<OndLine> v2;
@@ -118,13 +113,13 @@ void rf_test1() {
 // ¤Á³ÎÀÉ®× (Ãi¥[¸ü)
 void rf_test2() {
 	OndLine line;
-	for (line.openFile("a.txt"); line.getline();) {
+	for (; line.getline();) {
 		cout << line << endl;
 	}
 }
-// «Øºc¤l¤Á³Î
+// ¤Á³Î¦r¦ê
 void rf_test3() {
-	string_view str = "123 | 321";
+	string str = "123 | 321";
 	OndLine line(str, " | ");
 	cout << line << endl;
 
