@@ -34,5 +34,11 @@
     <ClInclude Include="ReadFile.hpp">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="Team.hpp">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="TeamTable.hpp">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
