@@ -31,8 +31,7 @@ public:
 		if (debug) cout << "  群組名單::" << endl;
 		for (int i = 0; i < groupSize; i++) {
 			line.getline();
-			// 建立隊伍查詢表
-			groupTable.createTable(line);
+			groupTable.createTable(line); // 建立隊伍查詢表
 			if (debug) cout << "    " << line << endl;
 		}
 		//checkMap(groupTable);
