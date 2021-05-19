@@ -41,4 +41,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md">
+      <Filter>資源檔</Filter>
+    </None>
+  </ItemGroup>
 </Project>
