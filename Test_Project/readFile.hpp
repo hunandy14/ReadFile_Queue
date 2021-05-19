@@ -5,13 +5,13 @@
 #include <string_view>
 using namespace std;
 
-class OndLine {
+class OneLine {
 public:
-	OndLine() {}
-	OndLine(vector<string_view> oneline) {
+	OneLine() {}
+	OneLine(vector<string_view> oneline) {
 		data = oneline;
 	}
-	OndLine(const string_view strv, string_view delims = " ") {
+	OneLine(const string_view strv, string_view delims = " ") {
 		splitSV(strv, delims);
 	}
 	operator vector<string_view>() const {
@@ -58,7 +58,7 @@ private:
 	fstream fs;
 };
 
-std::ostream& operator<<(std::ostream& out, OndLine& v) {
+std::ostream& operator<<(std::ostream& out, OneLine& v) {
 	auto&& data = (vector<string_view>)v;
 	cout << "[";
 	for (size_t i = 0; i < data.size(); i++) {
@@ -78,7 +78,7 @@ std::ostream& operator<<(std::ostream& out, vector<string_view>& v) {
 	cout << "]";
 	return out;
 }
-std::ostream& operator<<(std::ostream& out, vector<OndLine>& v) {
+std::ostream& operator<<(std::ostream& out, vector<OneLine>& v) {
 	for (auto&& i : v) {
 		out << i << endl;
 	}
@@ -104,15 +104,15 @@ vector<string> ReadFile_line(const string file_name) {
 // ¤Á³ÎÀÉ®×
 void rf_test1() {
 	auto&& v1 = ReadFile_line("in.txt");
-	vector<OndLine> v2;
+	vector<OneLine> v2;
 	for (auto&& i : v1) {
-		v2.emplace_back(OndLine(i, " "));
+		v2.emplace_back(OneLine(i, " "));
 	}
 	cout << v2 << endl;
 }
 // ¤Á³ÎÀÉ®× (Ãi¥[¸ü)
 void rf_test2() {
-	OndLine line;
+	OneLine line;
 	line.openFile("a.txt");
 	while (line.getline()) {
 		vector<string_view>&& tokenList = line;
@@ -122,7 +122,7 @@ void rf_test2() {
 // ¤Á³Î¦r¦ê
 void rf_test3() {
 	string str = "123 | 321";
-	OndLine line(str, " | ");
+	OneLine line(str, " | ");
 	cout << line << endl;
 
 	vector<string_view>&& tokenList = line;
