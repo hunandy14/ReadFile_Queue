@@ -113,8 +113,10 @@ void rf_test1() {
 // ¤Á³ÎÀÉ®× (Ãi¥[¸ü)
 void rf_test2() {
 	OndLine line;
-	for (; line.getline();) {
-		cout << line << endl;
+	line.openFile("a.txt");
+	while (line.getline()) {
+		vector<string_view>&& tokenList = line;
+		cout << tokenList << endl;
 	}
 }
 // ¤Á³Î¦r¦ê
@@ -123,8 +125,9 @@ void rf_test3() {
 	OndLine line(str, " | ");
 	cout << line << endl;
 
-	vector<string_view> line2 = line;
-	cout << line2 << endl;
+	vector<string_view>&& tokenList = line;
+	for (size_t i = 0; i < tokenList.size(); i++)
+		cout << tokenList[i] << endl;
 }
 
 void rf_test() {
