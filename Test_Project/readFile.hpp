@@ -18,10 +18,16 @@ public:
 		return data;
 	}
 	string getStringIdx(size_t idx) const {
-		return string(data[idx]);
+		string s = "";
+		if (idx < data.size()) 	{
+			s = string(data[idx]);
+		} else {
+			throw runtime_error("range Error.");
+		}
+		return s;
 	}
 	long getIntIdx(size_t idx) const {
-		return stoull(string(data[idx]));
+		return stoull(getStringIdx(idx));
 	}
 	size_t size() {
 		return data.size();
@@ -139,8 +145,17 @@ void rf_test3() {
 		cout << tokenList[i] << endl;
 }
 
-void rf_test() {
-	rf_test1();
-	rf_test2();
-	rf_test3();
+// ªð¦^¦r¦ê
+void rf_test_getIdx() {
+	string str = "123 | 321";
+	OneLine line(str, " | ");
+	
+	cout << line.getStringIdx(2) << endl;
 }
+
+void rf_test() {
+	//rf_test1();
+	//rf_test2();
+	//rf_test3();
+}
+
