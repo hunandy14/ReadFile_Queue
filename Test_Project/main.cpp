@@ -4,85 +4,72 @@
 using namespace std;
 
 
-
+GroupTable groupTable;
 TeamList teamList;
 vector<int> sequence;
 bool testOneData2(OneLine& line, int idx) {
+	groupTable.clear();
+	sequence.clear();
+	bool debug = 0;
+
 	if (!line.getline()) { return 1; }
-
 	// 獲取群組
-	cout << "[" << idx << "]群組::" << endl;
-
+	if (debug) cout << "[" << idx << "]群組::" << endl;
 	size_t groupSize = line.getIntIdx(0);
 	size_t gp_idx = groupSize;
 	// 群組名單
-	cout << "  群組名單::" << endl;
-	groupTable.clear();
+	if (debug) cout << "  群組名單::" << endl;
 	for (int i = 0; i < groupSize; i++) {
 		line.getline();
 		vector<string_view>&& tokenList = line;
 		// 建立隊伍查詢表
-		createTable(line);
-		cout << "    " << line << endl;
+		groupTable.createTable(line);
+		if (debug) cout << "    " << line << endl;
 	}
 	//checkMap(groupTable);
 
 	// 插隊狀況
-	cout << "  插隊狀況::" << endl;
+	if (debug) cout << "  插隊狀況::" << endl;
 	for (int i = 0; line.getline(); ++i) {
 		if (line.getStringIdx(0) == "STOP") { break; }
-		vector<string_view>&& tokenList = line;
-		cout << "    " << tokenList << endl;
+		if (debug) cout << "    " << line << endl;
 
 		// 取出數據
 		string cmd = line.getStringIdx(0);
 
 		// 插隊
-		if (cmd == "ENQUEUE") 	{
+		if (cmd == "ENQUEUE") {
 			int id = line.getIntIdx(1);
 			auto iter = groupTable.find(id);
-			//cout << id << endl;
+			//if(debug)  cout << id << endl;
 
-			if (iter != groupTable.end()) 	{
-				//cout << "找到" << iter->first << "->" <<iter->second << endl;
+			if (iter != groupTable.end()) {
+				//if(debug)  cout << "找到" << iter->first << "->" <<iter->second << endl;
 				teamList.ENQUEUE(iter->second, iter->first);
 			} else {
-				//cout << "沒團的單人" << endl;
+				//if(debug)  cout << "沒團的單人" << endl;
 				teamList.ENQUEUE(gp_idx++, id);
 			}
-			//cout << "ENQUEUE=   " << it->first  << "-->" << it->second << endl;
-			//teamList.ENQUEUE(cmd, id);
 		}
 		// 前面的領到
-		else if (cmd == "DEQUEUE") 	{
-			int peple_idx=-1;
-			cout << "------";
-			teamList.DEQUEUE(peple_idx, 1);
+		else if (cmd == "DEQUEUE") {
+			int peple_idx = -1;
+			if (debug)  cout << "------";
+			teamList.DEQUEUE(peple_idx, debug);
 			sequence.push_back(peple_idx);
 		}
-
 	}
 	return 0;
 }
-
-void test1() {
-	OneLine line;
-	line.openFile("in.txt");
-	testOneData2(line, 0);
-	testOneData2(line, 0);
-	//for (int i=0; !testOneData(line, i); ++i) {}
-}
-
-void allTest() {
-	test_Team_inout();
-	test_TeamList_inout();
-	rf_test_getIdx();
-	test_TeamList_inout();
-}
 //====================================================================================
 int main(int argc, char const* argv[]) {
-	test1();
-
+	OneLine line;
+	line.openFile("in.txt");
+	for (int i = 0; !testOneData2(line, i); ++i) {
+		for (auto&& i : sequence) {
+			cout << i << ", ";
+		} cout << endl;
+	}
 	return 0;
 }
 //====================================================================================

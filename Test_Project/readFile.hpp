@@ -6,20 +6,22 @@
 using namespace std;
 
 class OneLine {
+private:
+	using _type = vector<string_view>;
 public:
 	OneLine() {}
-	OneLine(vector<string_view> oneline) {
+	OneLine(_type oneline) {
 		data = oneline;
 	}
 	OneLine(const string_view strv, string_view delims = " ") {
 		splitSV(strv, delims);
 	}
-	operator vector<string_view>() const {
+	operator _type() const {
 		return data;
 	}
 	string getStringIdx(size_t idx) const {
 		string s = "";
-		if (idx < data.size()) 	{
+		if (idx < data.size()) {
 			s = string(data[idx]);
 		} else {
 			throw runtime_error("range Error.");
@@ -32,9 +34,8 @@ public:
 	size_t size() {
 		return data.size();
 	}
-
-	vector<string_view> splitSV(string_view strv, string_view delims = " ") {
-		vector<string_view> output;
+	_type splitSV(string_view strv, string_view delims = " ") {
+		_type output;
 		for (size_t first = 0; first < strv.size();) {
 			const auto second = strv.find_first_of(delims, first);
 			if (first != second)
@@ -64,40 +65,24 @@ public:
 				throw runtime_error("Reading error.");
 		}
 	}
-
 private:
-	vector<string_view> data;
+	_type data;
 	string str;
 private:
 	string name;
 	fstream fs;
 };
-
-std::ostream& operator<<(std::ostream& out, OneLine& v) {
-	auto&& data = (vector<string_view>)v;
-	cout << "[";
-	for (size_t i = 0; i < data.size(); i++) {
-		out << data[i];
-		if (i < data.size() - 1) { cout << ", "; }
-	}
-	cout << "]";
-	return out;
-}
 std::ostream& operator<<(std::ostream& out, vector<string_view>& v) {
-	auto&& data = (vector<string_view>)v;
 	cout << "[";
-	for (size_t i = 0; i < data.size(); i++) {
-		out << data[i];
-		if (i < data.size() - 1) { cout << ", "; }
+	for (size_t i = 0; i < v.size(); i++) {
+		out << v[i];
+		if (i < v.size() - 1) { cout << ", "; }
 	}
 	cout << "]";
 	return out;
 }
-std::ostream& operator<<(std::ostream& out, vector<OneLine>& v) {
-	for (auto&& i : v) {
-		out << i << endl;
-	}
-	return out;
+std::ostream& operator<<(std::ostream& out, OneLine& v) {
+	return out << (vector<string_view>&)v;
 }
 
 //=============================================================================
@@ -123,7 +108,9 @@ void rf_test1() {
 	for (auto&& i : v1) {
 		v2.emplace_back(OneLine(i, " "));
 	}
-	cout << v2 << endl;
+	for (auto&& i : v2) {
+		cout << i << endl;
+	}
 }
 // ¤Á³ÎÀÉ®× (Ãi¥[¸ü)
 void rf_test2() {
@@ -149,7 +136,7 @@ void rf_test3() {
 void rf_test_getIdx() {
 	string str = "123 | 321";
 	OneLine line(str, " | ");
-	
+
 	cout << line.getStringIdx(2) << endl;
 }
 

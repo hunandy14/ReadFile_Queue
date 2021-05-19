@@ -12,9 +12,6 @@ public:
 		return teamName;
 	}
 
-	void setName(int id) {
-		this->teamName = id;
-	}
 	int getName() {
 		return teamName;
 	}
@@ -52,45 +49,37 @@ public:
 	TeamList() = default;
 	void ENQUEUE(int teamName, int id) {
 		// 團隊已經存在
-		list<Team>::iterator it = findTeam(teamName);
+		auto&& it = findTeam(teamName);
 		if (it != data.end()) {
-			//cout << "#### 1" << endl;
 			it->ENQUEUE(id);
 		}
 		// 團隊不存在
 		else {
-			//cout << "#### 2" << endl;
 			Team t(teamName);
 			t.ENQUEUE(id);
 			data.push_back(t);
 		}
 	}
-	bool DEQUEUE(int& peple, bool pri=0) {
+	bool DEQUEUE(int& peple, bool pri = 0) {
 		// 檢查陣列是否正常有東西
-		if (data.size()>0) 	{
+		if (data.size() > 0) {
 			Team& t = data.front();
 			if (t.DEQUEUE(peple)) { // 團隊內還有人
-									//cout << "這團有人" << endl;
-				if (pri) 	{
+				if (pri) {
 					cout << "[" << t.getName() << "]-" << peple << endl;
 				}
 				return 1;
-			} else 	{
-				//cout << "這團沒人，砍掉團名，再呼叫一次自己" << endl;
+			} else { // 這團沒人了，砍掉之後重叫下一個
 				data.pop_front();
 				DEQUEUE(peple, pri);
 			}
 		}
 		// 沒團隊了
-		else 	{
-			//cout << "鎮列為0" << endl;
-			return 0;
-		}
-
+		else { return 0; }
 		return 0;
 	}
 	list<Team>::iterator findTeam(int teamName) {
-		list<Team>::iterator it = data.begin();
+		auto&& it = data.begin();
 		for (; it != data.end(); ++it) {
 			if (teamName == it->getName()) {
 				return it;
