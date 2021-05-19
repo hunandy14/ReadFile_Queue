@@ -60,18 +60,16 @@ public:
 			data.push_back(t);
 		}
 	}
-	bool DEQUEUE(int& peple, bool pri = 0) {
+	bool DEQUEUE(int& peple, bool debug = 0) {
 		// 檢查陣列是否正常有東西
 		if (data.size() > 0) {
 			Team& t = data.front();
 			if (t.DEQUEUE(peple)) { // 團隊內還有人
-				if (pri) {
-					cout << "[" << t.getName() << "]-" << peple << endl;
-				}
+				if (debug) cout << "[" << t.getName() << "]-" << peple << endl;
 				return 1;
 			} else { // 這團沒人了，砍掉之後重叫下一個
 				data.pop_front();
-				DEQUEUE(peple, pri);
+				DEQUEUE(peple, debug);
 			}
 		}
 		// 沒團隊了
