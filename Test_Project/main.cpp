@@ -52,13 +52,6 @@ bool testOneData(OneLine& line, int idx) {
 	return 0;
 }
 
-void test1() {
-	OneLine line;
-	line.openFile("in.txt");
-	testOneData(line, 0);
-	//for (int i=0; !testOneData(line, i); ++i) {}
-}
-
 class Team {
 public:
 	Team(int name) :teamName(name) {}
@@ -75,10 +68,18 @@ public:
 	void ENQUEUE(int n) {
 		data.push(n);
 	}
-	int DEQUEUE() {
-		int num = data.front();
-		data.pop();
-		return num;
+	bool DEQUEUE(int& num) {
+		if (!data.empty()) {
+			num = data.front();
+			data.pop();
+			return 1;
+		}
+		return 0;
+	}
+	bool empty() {
+		if (data.empty())
+			return 1;
+		return 0;
 	}
 	void out() {
 		cout << "  [" << teamName << "]::" << endl;
@@ -100,20 +101,40 @@ public:
 		// 團隊已經存在
 		list<Team>::iterator it = findTeam(teamName);
 		if (it != data.end()) {
-			cout << "#### 1" << endl;
+			//cout << "#### 1" << endl;
 			it->ENQUEUE(id);
 		}
 		// 團隊不存在
 		else {
-			cout << "#### 2" << endl;
+			//cout << "#### 2" << endl;
 			Team t(teamName);
 			t.ENQUEUE(id);
 			data.push_back(t);
 		}
 	}
-	int DEQUEUE() {
-		data.front().DEQUEUE();
-		return data.front().DEQUEUE();;
+	bool DEQUEUE(int& peple, bool pri=0) {
+		// 檢查陣列是否正常有東西
+		if (data.size()>0) 	{
+			Team& t = data.front();
+			if (t.DEQUEUE(peple)) { // 團隊內還有人
+				//cout << "這團有人" << endl;
+				if (pri) 	{
+					cout << "[" << t.getName() << "]-" << peple << endl;
+				}
+				return 1;
+			} else 	{
+				//cout << "這團沒人，砍掉團名，再呼叫一次自己" << endl;
+				data.pop_front();
+				DEQUEUE(peple, pri);
+			}
+		}
+		// 沒團隊了
+		else 	{
+			//cout << "鎮列為0" << endl;
+			return 0;
+		}
+
+		return 0;
 	}
 	list<Team>::iterator findTeam(int teamName) {
 		list<Team>::iterator it = data.begin();
@@ -133,31 +154,49 @@ private:
 	list<Team> data;
 };
 
+// 測試團隊先進先出
 void testll1() {
 	Team team(0);
 	team.ENQUEUE(1);
 	team.ENQUEUE(2);
 	team.ENQUEUE(3);
 
-	cout << team.DEQUEUE() << endl;
-	cout << team.DEQUEUE() << endl;
-	cout << team.DEQUEUE() << endl;
+	int p = -1;
+	while (team.DEQUEUE(p)) {
+		cout << p << endl;
+	}
 }
+// 測設好幾團混合，以團為優先先進先出
 void testll2() {
+	int p = -1;
 	TeamList l;
 	l.ENQUEUE(3, 6);
+	l.DEQUEUE(p, 1);
 	l.ENQUEUE(0, 1);
 	l.ENQUEUE(1, 3);
 	l.ENQUEUE(0, 2);
 	l.ENQUEUE(2, 5);
-	l.ENQUEUE(1, 4);
-	l.out();
+
+	l.DEQUEUE(p, 1);
+	l.DEQUEUE(p, 1);
+	l.DEQUEUE(p, 1);
+	l.DEQUEUE(p, 1);
+	l.ENQUEUE(1, 4);// 晚到沒插到隊
+	l.DEQUEUE(p, 1);
+}
+
+
+void test1() {
+	OneLine line;
+	line.openFile("in.txt");
+	testOneData(line, 0);
+	//for (int i=0; !testOneData(line, i); ++i) {}
 }
 //====================================================================================
 int main(int argc, char const* argv[]) {
-	//test1();
+	test1();
 	//testll1();
-	testll2();
+	//testll2();
 	return 0;
 }
 //====================================================================================
