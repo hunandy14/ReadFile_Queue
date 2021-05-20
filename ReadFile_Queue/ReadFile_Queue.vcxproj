@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{3355dffa-5b5c-48f5-b397-2cb66cf43822}</ProjectGuid>
-    <RootNamespace>TestProject</RootNamespace>
+    <ProjectGuid>{d87434dc-ee83-4035-8acb-0767cb09f5fd}</ProjectGuid>
+    <RootNamespace>ReadFileQueue</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>ReadFile_Queue</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -89,7 +88,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,7 +116,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,9 +140,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ReadFile_Queue_main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="a.txt" />
     <Text Include="ex.txt" />
     <Text Include="in.txt" />
@@ -154,6 +148,9 @@
     <ClInclude Include="ReadFile.hpp" />
     <ClInclude Include="Team.hpp" />
     <ClInclude Include="TeamTable.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ReadFile_Queue_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
