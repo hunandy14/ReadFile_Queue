@@ -19,9 +19,9 @@ public:
 			cout << it->first << " => " << it->second << '\n';
 	}
 	// 根據隊友命令設定 一隊伍裡面有誰
-	void createTable(const vector<string>& line) {
-		for (size_t i = 1; i < line.size(); i++) {
-			int num = std::stoi(line[i]);
+	void createTable(const vector<string>& cmdList) {
+		for (size_t i = 1; i < cmdList.size(); i++) {
+			int num = std::stoi(cmdList[i]);
 			data[num] = groupCont;
 		}
 		groupCont++;

@@ -111,16 +111,16 @@ void test_TeamList_inout() {
 	int p = -1;
 	TeamList l;
 	l.ENQUEUE(3, 6);
-	l.DEQUEUE(p, 1);
+	l.DEQUEUE(p, true);
 	l.ENQUEUE(0, 1);
 	l.ENQUEUE(1, 3);
 	l.ENQUEUE(0, 2);
 	l.ENQUEUE(2, 5);
 
-	l.DEQUEUE(p, 1);
-	l.DEQUEUE(p, 1);
-	l.DEQUEUE(p, 1);
-	l.DEQUEUE(p, 1);
+	l.DEQUEUE(p, true);
+	l.DEQUEUE(p, true);
+	l.DEQUEUE(p, true);
+	l.DEQUEUE(p, true);
 	l.ENQUEUE(1, 4);// ±ß¨ì¨S´¡¨ì¶¤
-	l.DEQUEUE(p, 1);
+	l.DEQUEUE(p, true);
 }

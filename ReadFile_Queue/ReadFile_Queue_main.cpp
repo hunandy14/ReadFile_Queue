@@ -15,10 +15,12 @@ public:
 public:
 	void run(int count = -1) {
 		for (int i = 0; count; ++i) {
-			if (inpuCmd(line, i)) {break;}
+			if (inpuCmd(line, i+1)) {break;}
+			/*
 			for (auto&& i : sequence) {
 				cout << i << ", ";
 			} cout << endl;
+			*/
 		}
 	}
 public:
@@ -26,6 +28,7 @@ public:
 	void readhead(const int& idx) {
 		// 獲取群組
 		if (debug) cout << "[" << idx << "]群組::" << endl;
+		if (output) printf("Line #%d\n", idx);
 		groupSize = line.getIntIdx(0);
 		groupCount = groupSize;
 		// 群組名單
@@ -49,10 +52,11 @@ public:
 				teamList.ENQUEUE(groupCount++, id);
 			}
 		} else if (cmd == "DEQUEUE") { // 前面的領到了
-			int peple_idx = -1; // 接收是誰領到了
+			int peple = -1; // 接收是誰領到了
 			if (debug)  cout << "------";
-			teamList.DEQUEUE(peple_idx, debug);
-			sequence.push_back(peple_idx);
+			teamList.DEQUEUE(peple, debug);
+			sequence.push_back(peple);
+			if (output) printf("%d\n", peple);
 		}
 	}
 	// 執行命令
@@ -76,7 +80,8 @@ public:
 private:
 	OneLine line;
 private:
-	bool debug = 1;
+	bool debug = 0;
+	bool output = 1;
 	size_t groupCount = 0;
 	size_t groupSize = 0;
 	GroupTable groupTable;
