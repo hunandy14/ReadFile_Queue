@@ -31,12 +31,11 @@ public:
 		for (size_t i = 1; i < _data.size(); i++) {
 			auto&& sv = _data[i];
 			int result = -1;
-			if (auto [p, ec] = std::from_chars(std::data(sv), 
-				std::data(sv)+std::size(sv), result); ec == std::errc())
-			{
+			if (auto [p, ec] = std::from_chars(std::data(sv),
+				std::data(sv) + std::size(sv), result); ec == std::errc()) {
 				v[i] = result;
 				// std::cout << result << "\n" "p -> \"" << p << "\"\n";
-			} else 	{
+			} else {
 				v[i] = -1;
 				// throw runtime_error("data is not int.");
 			}
@@ -59,8 +58,8 @@ public:
 		}
 		return s;
 	}
-	long getIntIdx(size_t idx) const {
-		return stoull(getStringIdx(idx));
+	long long getIntIdx(size_t idx) const {
+		return stoll(getStringIdx(idx));
 	}
 
 	size_t size() {

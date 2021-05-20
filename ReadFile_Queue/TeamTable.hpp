@@ -44,7 +44,7 @@ public:
 	}
 	void addGroup(const vector<int>& group, int start = 0, int end = -1) {
 		if (end < 0)
-			end = group.size();
+			end = (int)group.size();
 		for (size_t i = 1; i < end; i++) {
 			_data[group[i]] = groupSize;
 		}
