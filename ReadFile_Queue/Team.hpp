@@ -48,12 +48,12 @@ class TeamList {
 public:
 	TeamList() = default;
 	void ENQUEUE(int teamName, int id) {
-		// ¹Î¶¤¤w¸g¦s¦b
+		// åœ˜éšŠå·²ç¶“å­˜åœ¨
 		auto&& it = findTeam(teamName);
 		if (it != data.end()) {
 			it->ENQUEUE(id);
 		}
-		// ¹Î¶¤¤£¦s¦b
+		// åœ˜éšŠä¸å­˜åœ¨
 		else {
 			Team t(teamName);
 			t.ENQUEUE(id);
@@ -61,18 +61,18 @@ public:
 		}
 	}
 	bool DEQUEUE(int& peple, bool debug = 0) {
-		// ÀË¬d°}¦C¬O§_¥¿±`¦³ªF¦è
+		// æª¢æŸ¥é™£åˆ—æ˜¯å¦æ­£å¸¸æœ‰æ±è¥¿
 		if (data.size() > 0) {
 			Team& t = data.front();
-			if (t.DEQUEUE(peple)) { // ¹Î¶¤¤ºÁÙ¦³¤H
+			if (t.DEQUEUE(peple)) { // åœ˜éšŠå…§é‚„æœ‰äºº
 				if (debug) cout << "[" << t.getName() << "]-" << peple << endl;
 				return 1;
-			} else { // ³o¹Î¨S¤H¤F¡A¬å±¼¤§«á­«¥s¤U¤@­Ó
+			} else { // é€™åœ˜æ²’äººäº†ï¼Œç æŽ‰ä¹‹å¾Œé‡å«ä¸‹ä¸€å€‹
 				data.pop_front();
 				DEQUEUE(peple, debug);
 			}
 		}
-		// ¨S¹Î¶¤¤F
+		// æ²’åœ˜éšŠäº†
 		else { return 0; }
 		return 0;
 	}
@@ -94,7 +94,7 @@ private:
 	list<Team> data;
 };
 
-// ´ú¸Õ¹Î¶¤¥ý¶i¥ý¥X
+// æ¸¬è©¦åœ˜éšŠå…ˆé€²å…ˆå‡º
 void test_Team_inout() {
 	Team team(0);
 	team.ENQUEUE(1);
@@ -106,7 +106,7 @@ void test_Team_inout() {
 		cout << p << endl;
 	}
 }
-// ´ú³]¦n´X¹Î²V¦X¡A¥H¹Î¬°Àu¥ý¥ý¶i¥ý¥X
+// æ¸¬è¨­å¥½å¹¾åœ˜æ··åˆï¼Œä»¥åœ˜ç‚ºå„ªå…ˆå…ˆé€²å…ˆå‡º
 void test_TeamList_inout() {
 	int p = -1;
 	TeamList l;
@@ -121,6 +121,6 @@ void test_TeamList_inout() {
 	l.DEQUEUE(p, true);
 	l.DEQUEUE(p, true);
 	l.DEQUEUE(p, true);
-	l.ENQUEUE(1, 4);// ±ß¨ì¨S´¡¨ì¶¤
+	l.ENQUEUE(1, 4);// æ™šåˆ°æ²’æ’åˆ°éšŠ
 	l.DEQUEUE(p, true);
 }

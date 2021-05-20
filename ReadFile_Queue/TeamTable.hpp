@@ -21,12 +21,12 @@ public:
 		return _data;
 	}
 public:
-	// ¨Ì§Ç¨ú¥X©Ò¦³¦C¶¤¤¤ªº¤H
+	// ä¾åºå–å‡ºæ‰€æœ‰åˆ—éšŠä¸­çš„äºº
 	void checkTable() {
 		for (auto&& it = _data.begin(); it != _data.end(); ++it)
 			cout << it->first << " => " << it->second << '\n';
 	}
-	// ³]©w¤@²Õ¶¤¥î(¹ïÀ³¨ì¦P¤@²ÕUID)
+	// è¨­å®šä¸€çµ„éšŠä¼(å°æ‡‰åˆ°åŒä¸€çµ„UID)
 	void addGroup(const vector<string>& cmdList) {
 		for (size_t i = 1; i < cmdList.size(); i++) {
 			int num = std::stoi(cmdList[i]);
@@ -50,7 +50,7 @@ public:
 		}
 		++groupSize;
 	}
-	// ³]©w¨S¶¤¥îªº³æ¤H
+	// è¨­å®šæ²’éšŠä¼çš„å–®äºº
 	void addSingle(const int& key, const int& value) {
 		_data[key] = value;
 		++groupSize;
@@ -69,6 +69,6 @@ public:
 		return _data.end();
 	}
 private:
-	int groupSize; // ·í«eªí¤¤¦³´X²Õ¤£¦Pªº¶¤¥î
+	int groupSize; // ç•¶å‰è¡¨ä¸­æœ‰å¹¾çµ„ä¸åŒçš„éšŠä¼
 	_tepe _data;
 };

@@ -117,7 +117,7 @@ std::ostream& operator<<(std::ostream& out, OneLine& v) {
 }
 
 //=============================================================================
-// ³v¦æÅª¨ú
+// é€è¡Œè®€å–
 vector<string> ReadFile_line(const string file_name) {
 	vector<string> v;
 	fstream fs(file_name, ios::in);
@@ -132,7 +132,7 @@ vector<string> ReadFile_line(const string file_name) {
 	return v;
 }
 
-// ¤Á³ÎÀÉ®×
+// åˆ‡å‰²æª”æ¡ˆ
 void rf_test1() {
 	auto&& v1 = ReadFile_line("data_test.txt");
 	vector<OneLine> v2;
@@ -143,7 +143,7 @@ void rf_test1() {
 		cout << i << endl;
 	}
 }
-// ¤Á³ÎÀÉ®× (Ãi¥[¸ü)
+// åˆ‡å‰²æª”æ¡ˆ (æ‡¶åŠ è¼‰)
 void rf_test2() {
 	OneLine line;
 	line.openFile("data_test.txt");
@@ -152,7 +152,7 @@ void rf_test2() {
 		cout << tokenList << endl;
 	}
 }
-// ¤Á³Î¦r¦ê
+// åˆ‡å‰²å­—ä¸²
 void rf_test3() {
 	string str = "123 | 321";
 	OneLine line(str, " | ");
@@ -163,7 +163,7 @@ void rf_test3() {
 		cout << tokenList[i] << endl;
 }
 
-// ªð¦^¦r¦ê
+// è¿”å›žå­—ä¸²
 void rf_test_getIdx() {
 	string str = "123 | 321";
 	OneLine line(str, " | ");
