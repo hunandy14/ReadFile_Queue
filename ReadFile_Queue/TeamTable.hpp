@@ -1,44 +1,74 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <string_view>
 #include <map>
+#include <vector>
+#include <charconv>
+
+#include <array>
+#include <charconv>
+#include <iostream>
+#include <string_view>
 using namespace std;
 
 class GroupTable {
 private:
 	using _tepe = map<int, int>;
 public:
-	GroupTable() : groupCont(0) {}
+	GroupTable() : groupSize(0) {}
 	operator _tepe() {
-		return data;
+		return _data;
 	}
 public:
 	// 依序取出所有列隊中的人
-	void checkMap(_tepe table) {
-		for (auto&& it = table.begin(); it != table.end(); ++it)
+	void checkTable() {
+		for (auto&& it = _data.begin(); it != _data.end(); ++it)
 			cout << it->first << " => " << it->second << '\n';
 	}
-	// 根據隊友命令設定 一隊伍裡面有誰
-	void createTable(const vector<string>& cmdList) {
+	// 設定一組隊伍(對應到同一組UID)
+	void addGroup(const vector<string>& cmdList) {
 		for (size_t i = 1; i < cmdList.size(); i++) {
 			int num = std::stoi(cmdList[i]);
-			data[num] = groupCont;
+			_data[num] = groupSize;
 		}
-		groupCont++;
+		++groupSize;
 	}
-	size_t size() {
-		return groupCont;
+	void addGroup(const vector<string_view>& cmdList) {
+		for (size_t i = 1; i < cmdList.size(); i++) {
+			auto&& sv = cmdList[i];
+			int result = -1;
+			std::from_chars(std::data(sv), std::data(sv) + std::size(sv), result);
+		}
+		++groupSize;
+	}
+	void addGroup(const vector<int>& group, int start = 0, int end = -1) {
+		if (end < 0)
+			end = group.size();
+		for (size_t i = 1; i < end; i++) {
+			_data[group[i]] = groupSize;
+		}
+		++groupSize;
+	}
+	// 設定沒隊伍的單人
+	void addSingle(const int& key, const int& value) {
+		_data[key] = value;
+		++groupSize;
+	}
+
+	size_t groupCount() {
+		return groupSize;
 	}
 	void clear() {
-		data.clear();
+		_data.clear();
 	}
 	_tepe::iterator find(const int& id) {
-		return data.find(id);
+		return _data.find(id);
 	}
 	_tepe::iterator end() {
-		return data.end();
+		return _data.end();
 	}
 private:
-	int groupCont;
-	_tepe data;
+	int groupSize; // 當前表中有幾組不同的隊伍
+	_tepe _data;
 };

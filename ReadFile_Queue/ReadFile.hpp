@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <string_view>
+#include <charconv>
 using namespace std;
 
 class OneLine {
@@ -11,24 +12,48 @@ private:
 public:
 	OneLine() {}
 	OneLine(_type oneline) {
-		data = oneline;
+		_data = oneline;
 	}
 	OneLine(const string_view strv, string_view delims = " ") {
 		splitSV(strv, delims);
 	}
 	operator _type() const {
-		return data;
+		return _data;
 	}
 	operator vector<string>() const {
-		vector<string> str(data.size());
-		for (size_t i = 0; i < data.size(); i++)
-			str[i] = data[i];
+		vector<string> str(_data.size());
+		for (size_t i = 0; i < _data.size(); i++)
+			str[i] = _data[i];
+		return str;
+	}
+	operator vector<int>() const {
+		vector<int> v(_data.size());
+		for (size_t i = 1; i < _data.size(); i++) {
+			auto&& sv = _data[i];
+			int result = -1;
+			if (auto [p, ec] = std::from_chars(std::data(sv), 
+				std::data(sv)+std::size(sv), result); ec == std::errc())
+			{
+				v[i] = result;
+				// std::cout << result << "\n" "p -> \"" << p << "\"\n";
+			} else 	{
+				v[i] = -1;
+				// throw runtime_error("data is not int.");
+			}
+		}
+		return v;
+	}
+	const string_view& operator[](size_t idx) const {
+		return _data[idx];
+	}
+
+	string& getCurrLine() {
 		return str;
 	}
 	string getStringIdx(size_t idx) const {
 		string s = "";
-		if (idx < data.size()) {
-			s = string(data[idx]);
+		if (idx < _data.size()) {
+			s = string(_data[idx]);
 		} else {
 			throw runtime_error("range Error.");
 		}
@@ -37,8 +62,9 @@ public:
 	long getIntIdx(size_t idx) const {
 		return stoull(getStringIdx(idx));
 	}
+
 	size_t size() {
-		return data.size();
+		return _data.size();
 	}
 	_type splitSV(string_view strv, string_view delims = " ") {
 		_type output;
@@ -52,10 +78,10 @@ public:
 		}
 		if (output.size() == 0)
 			output.emplace_back("");
-		data = std::move(output);
-		return data;
+		_data = std::move(output);
+		return _data;
 	}
-	std::istream& getline(string_view delims = " ") {
+	std::istream& readNextLine(string_view delims = " ") {
 		std::istream& is = std::getline(fs, str);
 		if (is) {
 			splitSV(str, delims);
@@ -72,7 +98,7 @@ public:
 		}
 	}
 private:
-	_type data;
+	_type _data;
 	string str;
 private:
 	string name;
@@ -122,7 +148,7 @@ void rf_test1() {
 void rf_test2() {
 	OneLine line;
 	line.openFile("a.txt");
-	while (line.getline()) {
+	while (line.readNextLine()) {
 		vector<string_view>&& tokenList = line;
 		cout << tokenList << endl;
 	}
