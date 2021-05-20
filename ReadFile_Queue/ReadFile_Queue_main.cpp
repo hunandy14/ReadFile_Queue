@@ -87,7 +87,7 @@ private:
 //====================================================================================
 int main(int argc, char const* argv[]) {
 	Unity ut;
-	ut.openFile("in.txt");
+	ut.openFile("data.txt");
 	ut.run();
 	return 0;
 }

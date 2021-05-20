@@ -140,9 +140,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="a.txt" />
-    <Text Include="ex.txt" />
-    <Text Include="in.txt" />
+    <Text Include="data.txt" />
+    <Text Include="data_test.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ReadFile.hpp" />
