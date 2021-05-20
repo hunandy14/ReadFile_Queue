@@ -134,7 +134,7 @@ vector<string> ReadFile_line(const string file_name) {
 
 // ¤Á³ÎÀÉ®×
 void rf_test1() {
-	auto&& v1 = ReadFile_line("in.txt");
+	auto&& v1 = ReadFile_line("data_test.txt");
 	vector<OneLine> v2;
 	for (auto&& i : v1) {
 		v2.emplace_back(OneLine(i, " "));
@@ -146,7 +146,7 @@ void rf_test1() {
 // ¤Á³ÎÀÉ®× (Ãi¥[¸ü)
 void rf_test2() {
 	OneLine line;
-	line.openFile("a.txt");
+	line.openFile("data_test.txt");
 	while (line.readNextLine()) {
 		vector<string_view>&& tokenList = line;
 		cout << tokenList << endl;
@@ -172,8 +172,8 @@ void rf_test_getIdx() {
 }
 
 void rf_test() {
-	//rf_test1();
-	//rf_test2();
-	//rf_test3();
+	rf_test1();
+	rf_test2();
+	rf_test3();
 }
 
