@@ -4,12 +4,7 @@
 #include <string_view>
 #include <map>
 #include <vector>
-#include <charconv>
 
-#include <array>
-#include <charconv>
-#include <iostream>
-#include <string_view>
 using namespace std;
 
 class GroupTable {
@@ -27,21 +22,6 @@ public:
 			cout << it->first << " => " << it->second << '\n';
 	}
 	// 設定一組隊伍(對應到同一組UID)
-	void addGroup(const vector<string>& cmdList) {
-		for (size_t i = 1; i < cmdList.size(); i++) {
-			int num = std::stoi(cmdList[i]);
-			_data[num] = groupSize;
-		}
-		++groupSize;
-	}
-	void addGroup(const vector<string_view>& cmdList) {
-		for (size_t i = 1; i < cmdList.size(); i++) {
-			auto&& sv = cmdList[i];
-			int result = -1;
-			std::from_chars(std::data(sv), std::data(sv) + std::size(sv), result);
-		}
-		++groupSize;
-	}
 	void addGroup(const vector<int>& group, int start = 0, int end = -1) {
 		if (end < 0)
 			end = (int)group.size();
