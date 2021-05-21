@@ -77,13 +77,12 @@ public:
 		}
 		if (output.size() == 0)
 			output.emplace_back("");
-		_data = std::move(output);
-		return _data;
+		return output;
 	}
 	std::istream& readNextLine(string_view delims = " ") {
 		std::istream& is = std::getline(fs, str);
 		if (is) {
-			splitSV(str, delims);
+			_data = splitSV(str, delims);
 		}
 		return is;
 	}
