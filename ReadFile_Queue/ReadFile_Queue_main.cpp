@@ -39,7 +39,7 @@ public:
 	}
 	// 執行排隊取出命令
 	bool cmd_exec(OneLine& line) {
-		string_view cmd = line[0];
+		string cmd(line[0]);
 		if (cmd == "ENQUEUE") { // 插隊
 			int id = (int)line.getIntIdx(1);
 			auto iter = groupTable.find(id);
