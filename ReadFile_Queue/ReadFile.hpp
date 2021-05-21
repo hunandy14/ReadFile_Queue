@@ -2,13 +2,13 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include <string_view>
+//#include <string_view>
 #include <charconv>
 using namespace std;
 
 class OneLine {
 public:
-	using _type = string_view;
+	using _type = string;
 	using _typev = vector<_type>;
 public:
 	OneLine() {}
@@ -21,12 +21,12 @@ public:
 	operator _typev() const {
 		return _data;
 	}
-	operator vector<string>() const {
+	/*operator vector<string>() const {
 		vector<string> str(_data.size());
 		for (size_t i = 0; i < _data.size(); i++)
 			str[i] = _data[i];
 		return str;
-	}
+	}*/
 	operator vector<int>() const {
 		vector<int> v(_data.size());
 		for (size_t i = 1; i < _data.size(); i++) {
@@ -66,19 +66,32 @@ public:
 	size_t size() {
 		return _data.size();
 	}
-	_typev split(_type strv, _type delims = " ") {
-		_typev output;
+	vector<string_view>
+	split(string_view strv, string_view delims = " ") {
+		vector<string_view> output;
 		for (size_t first = 0; first < strv.size();) {
 			const auto second = strv.find_first_of(delims, first);
 			if (first != second)
 				output.emplace_back(strv.substr(first, second - first));
-			if (second == _type::npos)
+			if (second == string_view::npos)
 				break;
 			first = second + 1;
 		}
 		if (output.size() == 0)
 			output.emplace_back("");
 		return output;
+	}
+	vector<string>
+	split(const string& str, const string& delims = " "){
+		vector<string> tokens;
+		string::size_type lastPos = str.find_first_not_of(delims, 0);
+		string::size_type pos = str.find_first_of(delims, lastPos);
+		while (string::npos != pos || string::npos != lastPos) {
+			tokens.push_back(str.substr(lastPos, pos - lastPos));//use emplace_back after C++11
+			lastPos = str.find_first_not_of(delims, pos);
+			pos = str.find_first_of(delims, lastPos);
+		}
+		return tokens;
 	}
 	std::istream& readNextLine(_type delims = " ") {
 		std::istream& is = std::getline(fs, str);
