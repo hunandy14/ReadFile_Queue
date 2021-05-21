@@ -7,17 +7,18 @@
 using namespace std;
 
 class OneLine {
-private:
-	using _type = vector<string_view>;
+public:
+	using _type = string_view;
+	using _typev = vector<_type>;
 public:
 	OneLine() {}
-	OneLine(_type oneline) {
+	OneLine(_typev oneline) {
 		_data = oneline;
 	}
-	OneLine(const string_view strv, string_view delims = " ") {
-		splitSV(strv, delims);
+	OneLine(const _type strv, _type delims = " ") {
+		split(strv, delims);
 	}
-	operator _type() const {
+	operator _typev() const {
 		return _data;
 	}
 	operator vector<string>() const {
@@ -42,7 +43,7 @@ public:
 		}
 		return v;
 	}
-	const string_view& operator[](size_t idx) const {
+	const _type& operator[](size_t idx) const {
 		return _data[idx];
 	}
 
@@ -65,13 +66,13 @@ public:
 	size_t size() {
 		return _data.size();
 	}
-	_type splitSV(string_view strv, string_view delims = " ") {
-		_type output;
+	_typev split(_type strv, _type delims = " ") {
+		_typev output;
 		for (size_t first = 0; first < strv.size();) {
 			const auto second = strv.find_first_of(delims, first);
 			if (first != second)
 				output.emplace_back(strv.substr(first, second - first));
-			if (second == string_view::npos)
+			if (second == _type::npos)
 				break;
 			first = second + 1;
 		}
@@ -79,10 +80,10 @@ public:
 			output.emplace_back("");
 		return output;
 	}
-	std::istream& readNextLine(string_view delims = " ") {
+	std::istream& readNextLine(_type delims = " ") {
 		std::istream& is = std::getline(fs, str);
 		if (is) {
-			_data = splitSV(str, delims);
+			_data = split(str, delims);
 		}
 		return is;
 	}
@@ -96,13 +97,13 @@ public:
 		}
 	}
 private:
-	_type _data;
+	_typev _data;
 	string str;
 private:
 	string name;
 	fstream fs;
 };
-std::ostream& operator<<(std::ostream& out, vector<string_view>& v) {
+std::ostream& operator<<(std::ostream& out, OneLine::_typev& v) {
 	cout << "[";
 	for (size_t i = 0; i < v.size(); i++) {
 		out << v[i];
@@ -112,7 +113,7 @@ std::ostream& operator<<(std::ostream& out, vector<string_view>& v) {
 	return out;
 }
 std::ostream& operator<<(std::ostream& out, OneLine& v) {
-	return out << (vector<string_view>&)v;
+	return out << (OneLine::_typev&)v;
 }
 
 //=============================================================================
@@ -147,7 +148,7 @@ void rf_test2() {
 	OneLine line;
 	line.openFile("data_test.txt");
 	while (line.readNextLine()) {
-		vector<string_view>&& tokenList = line;
+		OneLine::_typev&& tokenList = line;
 		cout << tokenList << endl;
 	}
 }
@@ -157,7 +158,7 @@ void rf_test3() {
 	OneLine line(str, " | ");
 	cout << line << endl;
 
-	vector<string_view>&& tokenList = line;
+	OneLine::_typev&& tokenList = line;
 	for (size_t i = 0; i < tokenList.size(); i++)
 		cout << tokenList[i] << endl;
 }
