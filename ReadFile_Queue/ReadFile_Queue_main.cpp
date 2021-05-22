@@ -18,18 +18,18 @@ public:
 	void debugMode(){this->debug=1, this->output=0;}
 	void outputMode(){this->debug=0, this->output=1;}
 protected:
-	bool debug = 0;			// é–‹å•Ÿé™¤éŒ¯ç”¨è¼¸å‡º
-	bool output = 1;		// é–‹å•Ÿä½œç­”æ¨¡å¼ä¾ç…§é¡Œç›®éœ€æ±‚è¼¸å‡º
+	bool debug = 0;			// ¶}±Ò°£¿ù¥Î¿é¥X
+	bool output = 1;		// ¶}±Ò§@µª¼Ò¦¡¨Ì·ÓÃD¥Ø»İ¨D¿é¥X
 protected:
-	OneLine line;			// è®€å–æª”æ¡ˆ+åˆ‡å‰²å­—ä¸²æ ¸å¿ƒ
+	OneLine line;			// Åª¨úÀÉ®×+¤Á³Î¦r¦ê®Ö¤ß
 };
 
 class Queue: public Unity{
 public:
 	Queue() {}
 public:
-	// è¨­ç½®éšŠä¼æŸ¥è©¢è¡¨
-	void cmd_setGroupTable(const size_t& groupAmount, OneLine& line) {
+	// ³]¸m¶¤¥î¬d¸ßªí
+	void cmd_setGroupTable(OneLine& line, const size_t& groupAmount) {
 		for (size_t i = 0; i < groupAmount; i++) {
 			line.readNextLine();
 			vector<int> list = line;
@@ -37,43 +37,48 @@ public:
 			groupTable.addGroup(list, 1);
 		}
 	}
-	// åŸ·è¡Œæ’éšŠå–å‡ºå‘½ä»¤
+	// °õ¦æ±Æ¶¤¨ú¥X©R¥O
 	bool cmd_exec(OneLine& line) {
 		string cmd(line[0]);
-		if (cmd == "ENQUEUE") { // æ’éšŠ
+		if (cmd == "ENQUEUE") { // ´¡¶¤
 			int id = (int)line.getIntIdx(1);
 			auto iter = groupTable.find(id);
-			if (iter != groupTable.end()) { // æœ‰åœ˜çš„äºº
+			if (iter != groupTable.end()) { // ¦³¹Îªº¤H
+				if (debug) cout << " [" << iter->first << "-> " << iter->second << " ]";
 				teamList.ENQUEUE(iter->second, iter->first);
-			} else { // æ²’åœ˜çš„å–®äºº
-				teamList.ENQUEUE(groupCount++, id);
+			} else { // ¨S¹Îªº³æ¤H
+				int groupName = ++groupCount;
+				if (debug) cout << " [" << id << "-> " << groupName << " ]new";
+				teamList.ENQUEUE(groupName++, id);
 			}
-		} else if (cmd == "DEQUEUE") { // å‰é¢çš„é ˜åˆ°äº†
-			int peple = -1; // æ¥æ”¶æ˜¯èª°é ˜åˆ°äº†
-			if (debug)  cout << "------";
+		} else if (cmd == "DEQUEUE") { // «e­±ªº»â¨ì¤F
+			int peple = -1; // ±µ¦¬¬O½Ö»â¨ì¤F
+			//if (debug)  cout << "------";
 			teamList.DEQUEUE(peple, debug);
 			sequence.push_back(peple);
 			if (output) printf("%d\n", peple);
 		}
 		return 0;
 	}
-	// é€è¡Œè®€å–ä¸¦åŸ·è¡Œ
+	// ³v¦æÅª¨ú¨Ã°õ¦æ
 	bool runOneData() {
-		// æ¸¬è©¦æ˜¯å¦æœ‰è³‡æ–™å¯åŸ·è¡Œ
+		// ´ú¸Õ¬O§_¦³¸ê®Æ¥i°õ¦æ
 		if (!line.readNextLine()) {return 0;}
-		// ç²å–ç¾¤çµ„åå–®
-		int groupAmount = (int)line.getIntIdx(0);
-		if (debug) cout << "[" << groupCount << "]ç¾¤çµ„::" << endl;
+		// Àò¨ú¸s²Õ¦W³æ
+		int groupQuantity = (int)line.getIntIdx(0);
+		if (debug) cout << "[" << dataCount << "]¸ê®Æ²Õ::" << endl;
 		if (output) printf("Line #%d\n", dataCount+1);
-		// è¨­ç½®éšŠä¼æŸ¥è©¢è¡¨
-		cmd_setGroupTable(groupAmount, line);
-		// åŸ·è¡Œæ’éšŠå–å‡ºå‘½ä»¤
-		if (debug) cout << "  æ’éšŠç‹€æ³::" << endl;
+		// ³]¸m¶¤¥î¬d¸ßªí
+		cmd_setGroupTable(line, groupQuantity);
+		groupCount = groupQuantity;
+		// °õ¦æ[±Æ¶¤, ¨ú¥X]ªº©R¥O
+		if (debug) cout << "  ´¡¶¤ª¬ªp::" << endl;
 		for (int i = 0; line.readNextLine(); ++i) {
-			if (line.getStringIdx(0) == "STOP") { ++dataCount; break; }
-			if (debug) cout << "    " << line << endl;
-			// å–å‡ºæ•¸æ“š
+			if (line.getStringIdx(0) == "STOP") { ++dataCount;break; }
+			if (debug) cout << "    " << line;
+			// ¨ú¥X¼Æ¾Ú
 			cmd_exec(line);
+			if (debug) cout << endl;
 		}
 		return 1;
 	}
@@ -86,19 +91,19 @@ public:
 		}
 	}
 private:
-	int groupCount = 0;	// ç¾¤çµ„çš„æµæ°´è™Ÿ
-	GroupTable groupTable;	// ç¾¤çµ„æµæ°´è™Ÿå°ç…§è¡¨
-	TeamList teamList;		// æ’éšŠéšŠä¼
+	int groupCount = 0;		// ¶¤¥îªº¬y¤ô¸¹
+	GroupTable groupTable;	// ¸s²Õ¬y¤ô¸¹¹ï·Óªí
+	TeamList teamList;		// ±Æ¶¤¶¤¥î
 private:
-	int dataCount = 0;		// ç¸½å…±è·‘äº†å¹¾ç­†è³‡æ–™
-	vector<int> sequence;	// å„²å­˜çµæœ
+	int dataCount = 0;		// ¸ê®Æ²Õªº¬y¤ô¸¹
+	vector<int> sequence;	// Àx¦sµ²ªG
 };
 //====================================================================================
 int main(int argc, char const* argv[]) {
 	Queue ut;
-	ut.debugMode();
-	ut.openFile("data_test.txt");
-	ut.run();
+	//ut.debugMode();
+	ut.openFile("data.txt");
+	ut.run(1);
 	return 0;
 }
 //====================================================================================

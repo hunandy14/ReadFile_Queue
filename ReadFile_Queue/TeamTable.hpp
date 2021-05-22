@@ -30,8 +30,8 @@ public:
 		++groupSize;
 	}
 	// 設定沒隊伍的單人
-	void addSingle(const int& key, const int& value) {
-		_data[key] = value;
+	void addSingle(const int& key) {
+		_data[key] = groupSize;
 		++groupSize;
 	}
 
@@ -48,6 +48,20 @@ public:
 		return _data.end();
 	}
 private:
-	int groupSize; // 當前表中有幾組不同的隊伍
+	int groupSize; // 隊伍流水號，同時也表示存在幾組隊伍
 	_tepe _data;
 };
+
+
+void gt_test_addgp() {
+	GroupTable gp;
+
+	vector<int> v{5, 1, 2, 3, 4, 5};
+	gp.addGroup(v, 1);
+
+	vector<int> v2{5, 6, 7, 8, 9, 10};
+	gp.addGroup(v2, 1);
+
+	gp.addSingle(11);
+	gp.checkTable();
+}

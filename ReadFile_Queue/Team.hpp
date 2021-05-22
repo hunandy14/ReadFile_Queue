@@ -64,7 +64,7 @@ public:
 		if (data.size() > 0) {
 			Team& t = data.front();
 			if (t.DEQUEUE(peple)) { // 團隊內還有人
-				if (debug) cout << "[" << t.getName() << "]-" << peple << endl;
+				if (debug) cout << " [" << t.getName() << "]:: " << peple << "";
 				return 1;
 			} else { // 這團沒人了，砍掉之後重叫下一個
 				data.pop_front();

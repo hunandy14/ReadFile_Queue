@@ -2,13 +2,13 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include <string_view>
-#include <charconv>
+//#include <string_view>
+//#include <charconv>
 using namespace std;
 
 class OneLine {
 public:
-	using _type = string_view;
+	using _type = string;
 	using _typev = vector<_type>;
 public:
 	OneLine() {}
@@ -21,7 +21,7 @@ public:
 	operator _typev() const {
 		return _data;
 	}
-	operator vector<string>() const {
+	/*operator vector<string>() const {
 		vector<string> str(_data.size());
 		for (size_t i = 0; i < _data.size(); i++)
 			str[i] = _data[i];
@@ -42,7 +42,14 @@ public:
 			}
 		}
 		return v;
+	}*/
+	operator vector<int>() const {
+		vector<int> v;
+		for (auto&& i : _data)
+			v.emplace_back(std::stoi(i));
+		return v;
 	}
+
 	const _type& operator[](size_t idx) const {
 		return _data[idx];
 	}
