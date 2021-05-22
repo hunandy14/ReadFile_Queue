@@ -23,5 +23,8 @@
     <Text Include="in.txt">
       <Filter>資源檔</Filter>
     </Text>
+    <Text Include="data_test.txt">
+      <Filter>資源檔</Filter>
+    </Text>
   </ItemGroup>
 </Project>
