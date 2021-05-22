@@ -103,7 +103,7 @@ int main(int argc, char const* argv[]) {
 	Queue ut;
 	//ut.debugMode();
 	ut.openFile("data.txt");
-	ut.run(1);
+	ut.run();
 	return 0;
 }
 //====================================================================================
