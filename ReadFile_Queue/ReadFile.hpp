@@ -80,12 +80,23 @@ public:
 			output.emplace_back("");
 		return output;
 	}
-	std::istream& readNextLine(_type delims = " ") {
-		std::istream& is = std::getline(fs, str);
-		if (is) {
-			_data = split(str, delims);
+	bool readNextLine(_type delims = " ") {
+		bool notend=0;
+		if (fs.is_open()) 	{
+			std::istream& is = std::getline(fs, str);
+			if (is) {
+				_data = split(str, delims);
+				notend=1;
+			}
+		} else {
+			std::istream& is = std::getline(std::cin, str);
+			if (is) {
+				_data = split(str, delims);
+				notend=1;
+			}
 		}
-		return is;
+
+		return notend;
 	}
 	void openFile(const string file_name) {
 		if (name != file_name) {
