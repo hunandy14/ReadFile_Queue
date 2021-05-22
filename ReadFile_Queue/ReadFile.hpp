@@ -73,7 +73,7 @@ public:
 	size_t size() {
 		return _data.size();
 	}
-	_typev split(_type strv, _type delims = " ") {
+	const _typev& split(_type strv, _type delims = " ") {
 		_typev output;
 		for (size_t first = 0; first < strv.size();) {
 			const auto second = strv.find_first_of(delims, first);
@@ -85,20 +85,21 @@ public:
 		}
 		if (output.size() == 0)
 			output.emplace_back("");
-		return output;
+		_data = std::move(output);
+		return _data;
 	}
 	bool readNextLine(_type delims = " ") {
 		bool notend=0;
 		if (fs.is_open()) 	{
 			std::istream& is = std::getline(fs, str);
 			if (is) {
-				_data = split(str, delims);
+				split(str, delims);
 				notend=1;
 			}
 		} else {
 			std::istream& is = std::getline(std::cin, str);
 			if (is) {
-				_data = split(str, delims);
+				split(str, delims);
 				notend=1;
 			}
 		}
