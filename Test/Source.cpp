@@ -118,14 +118,11 @@ void OneLine_test3() {
 	for (size_t i = 0; i < line.size(); i++)
 		cout << "line[" << i << "] = " << line[i] << endl;
 }
-
-
 //====================================================================================
 int main(int argc, char const* argv[]) {
 	OneLine_test1();
 	OneLine_test2();
 	OneLine_test3();
-	//OneLine_test4();
 	return 0;
 }
 //====================================================================================
