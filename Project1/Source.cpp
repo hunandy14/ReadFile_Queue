@@ -3,19 +3,12 @@
 #include <iostream>
 using namespace std;
 
-
-
-
-
 inline void debugMode(const char* in, const char* out) {
-#ifndef ONLINE_JUDGE
 	if (in) freopen(in, "r", stdin);
 	if (out) freopen(out, "w", stdout);
-#endif // ONLINE_JUDGE
 }
+
 #define N 10000000
-
-
 
 int gp_id[N];		// 所屬的團體代號
 int nextId[N];		// 那個id的後面排的是誰
@@ -26,11 +19,8 @@ void PP(int fst) {
 	puts("");
 }
 
-
-
-
 int main(int argc, char* argv[]) {
-	//debugMode("in.txt", NULL);
+	debugMode("in.txt", NULL);
 
 	int tmp, teamQuan, teamSize;
 	for (int dataCount = 1; scanf("%d", &teamQuan) != EOF;) {
@@ -63,8 +53,6 @@ int main(int argc, char* argv[]) {
 				int& pp_nt = nextId[pp];		// 這個新人後面排的人
 				int& gpFn_nt = nextId[gpFn];	// 自己團最後一個人的下一個人
 				// ------------------------------------------------------
-
-
 				// 沒人在排隊
 				if (fst == -1) {
 					fst = lst = pp;		// 總隊伍頭尾都是自己
@@ -101,7 +89,6 @@ int main(int argc, char* argv[]) {
 				fst = nextId[fst];				// 總隊伍的第一個拿到東西走了
 			} else if (buff[0] == 'S')
 				break;
-			// debug
 			//PP(fst);
 		}
 	}
